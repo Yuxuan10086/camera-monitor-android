@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 渐变圆角背景 -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#3B82F6"
+                android:endColor="#06B6D4"
+                android:angle="135" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <!-- 前景图标 -->
+    <item
+        android:width="52dp"
+        android:height="52dp"
+        android:gravity="center">
+        <vector
+            android:width="52dp"
+            android:height="52dp"
+            android:viewportWidth="52"
+            android:viewportHeight="52">
+            <!-- 手机外框（线框） -->
+            <path
+                android:pathData="M18,8h16c1.1,0 2,0.9 2,2v32c0,1.1 -0.9,2 -2,2h-16c-1.1,0 -2,-0.9 -2,-2v-32c0,-1.1 0.9,-2 2,-2z"
+                android:strokeWidth="2"
+                android:strokeColor="#FFFFFF"
+                android:fillColor="#00000000" />
+            <!-- 顶部听筒槽 -->
+            <path
+                android:pathData="M24,11h4"
+                android:strokeWidth="1.5"
+                android:strokeColor="#FFFFFF" />
+            <!-- 取景框四个角 -->
+            <path
+                android:pathData="M19,22h3v-3M33,22h-3v-3M19,32h3v3M33,32h-3v3"
+                android:strokeWidth="2"
+                android:strokeColor="#FFFFFF" />
+            <!-- 中心对焦点（十字） -->
+            <path
+                android:pathData="M23,27h6M26,24v6"
+                android:strokeWidth="2"
+                android:strokeColor="#FFFFFF" />
+            <!-- 无线信号波纹弧 -->
+            <path
+                android:pathData="M40,17c0,1.4 -0.6,2.8 -1.8,3.9"
+                android:strokeWidth="2"
+                android:strokeColor="#FFFFFF" />
+            <path
+                android:pathData="M42,13c0,2.2 -0.9,4.3 -2.5,5.8"
+                android:strokeWidth="2"
+                android:strokeColor="#FFFFFF" />
+        </vector>
+    </item>
+</layer-list>

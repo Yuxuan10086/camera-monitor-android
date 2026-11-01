@@ -1,0 +1,30 @@
+# Gradle / Android 构建产物
+.gradle/
+build/
+app/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# 本机配置（含 SDK 路径，因机器而异）
+local.properties
+
+# 密钥配置（含日志收集端点 token），只提交 .example 模板
+secrets.properties
+
+# 发布产物与大文件
+/update/
+*.apk
+*.aab
+
+# 运行日志与调试数据
+/logs/
+/logs.json
+
+# IDE
+.idea/
+*.iml
+
+# 工具临时目录
+.trae-html-share-packages/
+.trae/

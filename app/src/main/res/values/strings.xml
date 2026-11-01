@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">双机监看自拍</string>
+    <string name="accessibility_service_label">双机监看触摸控制</string>
+    <string name="accessibility_service_desc">允许监看端远程控制本设备屏幕，用于双机自拍监看场景</string>
+
+    <!-- 通用 -->
+    <string name="role_camera">作为拍摄端</string>
+    <string name="role_monitor">作为监看端</string>
+    <string name="back">返回</string>
+
+    <!-- 拍摄端 -->
+    <string name="camera_waiting">等待监看端连接</string>
+    <string name="camera_waiting_hint">请在另一台手机上选择「作为监看端」</string>
+    <string name="pairing_code">配对码</string>
+    <string name="pairing_code_expire">配对码（5 分钟内有效）</string>
+    <string name="device_name">设备名称</string>
+    <string name="broadcasting">正在广播 WiFi Direct</string>
+
+    <!-- 监看端 -->
+    <string name="connect_to_camera">连接到拍摄端</string>
+    <string name="connect_hint">输入拍摄端显示的配对码</string>
+    <string name="input_pairing_code">输入配对码</string>
+    <string name="pairing_code_label">拍摄端显示的 6 位配对码</string>
+    <string name="connect">开始连接</string>
+    <string name="found_device">已发现 1 台设备</string>
+    <string name="connected">已连接</string>
+    <string name="wifi_warn">连接期间本设备将断开原有 WiFi，切换为直连拍摄端。</string>
+
+    <!-- 引导 -->
+    <string name="camera_setup">拍摄端设置</string>
+    <string name="need_accessibility">需要开启无障碍服务</string>
+    <string name="need_accessibility_desc">为了让监看端能控制本设备，需要开启无障碍服务。这是 Android 系统的安全功能，不会上传任何数据。</string>
+    <string name="step_enable_accessibility">开启无障碍服务</string>
+    <string name="step_accessibility_desc">设置 → 无障碍 → 找到「双机监看触摸控制」并开启</string>
+    <string name="go_to_settings">跳转无障碍设置</string>
+    <string name="step_record_code">记录配对码</string>
+    <string name="step_record_code_desc">在下方查看配对码，并告知监看端输入</string>
+
+    <!-- 状态 -->
+    <string name="status_connected">已连接</string>
+    <string name="status_reconnecting">正在重新连接…</string>
+    <string name="status_disconnected">连接已断开</string>
+</resources>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>双机监看自拍 APP · 产品需求文档 PRD v1.1</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --accent-bg: #eff6ff;
+    --warn: #b45309;
+    --warn-bg: #fffbeb;
+    --success: #059669;
+    --success-bg: #ecfdf5;
+    --tag-p0: #dc2626;
+    --tag-p1: #2563eb;
+    --tag-out: #6b7280;
+    --tag-mode: #059669;
+    --tag-research: #7c3aed;
+    --code-bg: #f3f4f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    padding: 40px 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+  header.doc-header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white;
+    padding: 40px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+  header.doc-header h1 { font-size: 28px; margin-bottom: 8px; }
+  header.doc-header .meta { font-size: 13px; opacity: 0.9; }
+  header.doc-header .meta span { margin-right: 24px; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 22px;
+    border-left: 4px solid var(--accent);
+    padding-left: 14px;
+    margin-bottom: 20px;
+    color: #111827;
+  }
+  h3 { font-size: 17px; margin: 24px 0 12px; color: #1f2937; }
+  h4 { font-size: 15px; margin: 18px 0 10px; color: #374151; }
+  p { margin-bottom: 12px; color: #374151; }
+  ul, ol { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 6px; color: #374151; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f9fafb; font-weight: 600; color: #111827; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    margin-right: 6px;
+  }
+  .tag-p0 { background: var(--tag-p0); }
+  .tag-p1 { background: var(--tag-p1); }
+  .tag-out { background: var(--tag-out); }
+  .tag-mode { background: var(--tag-mode); }
+  .tag-research { background: var(--tag-research); }
+  .callout {
+    background: var(--accent-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 16px 0;
+  }
+  .callout.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+  .callout.success { background: var(--success-bg); border-left-color: var(--success); }
+  .callout strong { color: #1e3a8a; }
+  .callout.warn strong { color: var(--warn); }
+  .callout.success strong { color: var(--success); }
+  .decision-box {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .decision-box .label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #065f46;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .decision-box .conclusion {
+    font-size: 16px;
+    font-weight: 600;
+    color: #064e3b;
+    margin-bottom: 6px;
+  }
+  .fr-id {
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .fr-block {
+    background: #fbfbfc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+  .fr-block h3 { margin-top: 0; }
+  .state-machine {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .flow-diagram {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0;
+  }
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    body { padding: 16px; }
+    section { padding: 20px; }
+  }
+  .compare-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .compare-card h4 { margin-top: 0; color: var(--accent); }
+  .badge-yes { color: #059669; font-weight: 600; }
+  .badge-no { color: #dc2626; font-weight: 600; }
+  .badge-partial { color: #b45309; font-weight: 600; }
+  .changelog {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .changelog h3 { margin-top: 0; color: #92400e; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="doc-header">
+  <h1>双机监看自拍 APP · 产品需求文档</h1>
+  <div class="meta">
+    <span>版本：v1.1</span>
+    <span>文档类型：PRD</span>
+    <span>日期：2026-10-26</span>
+  </div>
+</header>
+
+<div class="changelog">
+  <h3>v1.1 变更说明</h3>
+  <ul>
+    <li>连接方式：仅保留 WiFi Direct 直连，删除局域网模式</li>
+    <li>核心架构：改为<strong>屏幕共享 + 触摸控制</strong>方案，不再自研摄像头采集与独立反向控制 UI</li>
+    <li>拍摄逻辑：用户在拍摄端打开<strong>原生相机 APP</strong>，监看端镜像并直接操作</li>
+    <li>美颜：复用原生相机美颜能力（屏幕共享方案）；自研备选方案可用 GPUPixel</li>
+    <li>Type-C 有线：列入 P1 备选，明确可行性与限制（UVC 单向，反向控制需额外通道）</li>
+    <li>平台：仅 Android；不传音频，不传大文件</li>
+  </ul>
+</div>
+
+<!-- 1. 背景与目标 -->
+<section>
+  <h2>1. 背景与目标</h2>
+
+  <h3>1.1 场景问题</h3>
+  <p>使用手机后置摄像头自拍时，拍摄者无法看到画面，导致构图、表情、对焦均不可控。常见的解决方案（镜面、远程快门、定时拍摄）均无法提供实时反馈，拍摄成功率低。</p>
+
+  <h3>1.2 目标用户</h3>
+  <ul>
+    <li>需要高质量后置自拍的个人用户（旅行、证件照、穿搭记录等）</li>
+    <li>缺少专业相机监看设备的小型内容创作者</li>
+    <li>希望用现有手机替代昂贵监看器的用户</li>
+  </ul>
+
+  <h3>1.3 产品目标</h3>
+  <p>让用户仅用两台 Android 手机，通过 WiFi Direct 直连，将拍摄端的<strong>整个屏幕</strong>实时镜像到监看端，并由监看端直接触摸控制拍摄端，从而在监看端操作拍摄端的原生相机 APP，获得「所见即所拍」的后置自拍体验。</p>
+
+  <div class="callout success">
+    <strong>核心价值：</strong>把第二台手机变成拍摄手机的「无线触屏监视器」，复用原生相机全部功能（含美颜、专业模式、夜景等），零额外硬件。
+  </div>
+</section>
+
+<!-- 2. 产品决策：核心架构 -->
+<section>
+  <h2>2. 产品决策：核心架构与连接方式</h2>
+
+  <h3>2.1 核心架构决策：屏幕共享 + 触摸控制</h3>
+
+  <p>传统思路是自研摄像头采集 + 推流 + 独立控制 UI，但这意味着要重新实现相机的所有功能（美颜、对焦、变焦、专业参数等），开发量大且体验不如原生相机。</p>
+
+  <div class="decision-box">
+    <div class="label">产品决策</div>
+    <div class="conclusion">采用「屏幕镜像 + 触摸转发」方案，复用拍摄端原生相机 APP。</div>
+    <p style="margin:0;color:#064e3b;font-size:14px;">
+      监看端实时显示拍摄端的整个屏幕，并将触摸操作转发到拍摄端。用户在拍摄端打开原生相机 APP，即可在监看端完成取景、对焦、变焦、拍照、录像、美颜调节等全部操作。无需自研相机功能。
+    </p>
+  </div>
+
+  <div class="grid-2">
+    <div class="compare-card">
+      <h4>✓ 屏幕共享方案（采用）</h4>
+      <ul>
+        <li>复用原生相机全部功能（美颜、专业模式、夜景…）</li>
+        <li>无需自研摄像头采集与控制 UI</li>
+        <li>触摸即控制，操作直觉与本机一致</li>
+        <li>开发量小，可基于开源 scrcpy 协议</li>
+        <li>限制：需拍摄端开启「无线调试」</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4>✗ 自研采集方案（不采用）</h4>
+      <ul>
+        <li>需重新实现相机全部功能</li>
+        <li>美颜、对焦、变焦等需逐一适配</li>
+        <li>开发量大，体验难超越原生相机</li>
+        <li>仅在需要极低延迟或特殊效果时考虑</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>2.2 连接方式决策：仅 WiFi Direct 直连</h3>
+
+  <div class="decision-box">
+    <div class="label">产品决策</div>
+    <div class="conclusion">MVP 仅支持 WiFi Direct 直连，不做局域网模式。</div>
+    <p style="margin:0;color:#064e3b;font-size:14px;">
+      WiFi Direct 让两台设备直接建立点对点连接，不经过路由器，延迟更低、更稳定，且不依赖外部 WiFi 环境。监看端在连接期间会断开原有 WiFi。
+    </p>
+  </div>
+
+  <h3>2.3 Type-C 有线方案评估（P1 备选）</h3>
+
+  <h4>2.3.1 纯 Type-C 线传摄像头画面（不用采集卡）</h4>
+  <table>
+    <tr><th>维度</th><th>结论</th></tr>
+    <tr><td>是否可行</td><td class="badge-partial">有条件可行</td></tr>
+    <tr><td>技术路径</td><td>拍摄端启用 Android 原生 <code>DeviceAsWebcam</code>（UVC Gadget），通过 Type-C 以 UVC 协议输出摄像头画面；监看端作为 USB Host 用 UVC 驱动读取</td></tr>
+    <tr><td>系统要求</td><td>拍摄端 Android 14 QPR1+，且厂商在系统中启用 <code>ro.usb.uvc.enabled=true</code></td></tr>
+    <tr><td>设备兼容</td><td>Google Pixel 官方明确支持；小米/华为/OPPO/vivo 等需逐一确认是否启用</td></tr>
+    <tr><td>画面规格</td><td>MJPEG / YUYV，最高 1080p 30fps</td></tr>
+    <tr><td>延迟</td><td class="badge-yes">毫秒级，优于 WiFi</td></tr>
+  </table>
+
+  <h4>2.3.2 Type-C 下的反向控制</h4>
+  <table>
+    <tr><th>维度</th><th>结论</th></tr>
+    <tr><td>UVC 协议本身</td><td class="badge-no">仅单向传视频，不支持控制指令</td></tr>
+    <tr><td>可行方案</td><td>同一 Type-C 线上叠加 ADB 通道（USB 调试），实现触摸控制</td></tr>
+    <tr><td>复杂度</td><td class="badge-partial">较高：需同时配置 UVC Gadget + ADB，且设备兼容性差</td></tr>
+    <tr><td>MVP 决策</td><td class="badge-no">不投入</td></tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>Type-C 方案结论：</strong>传画面可行但设备覆盖率低（需 Android 14+ 且厂商支持 UVC），反向控制需额外叠加 ADB 通道，实现复杂。MVP 不投入，待 WiFi 方案验证后视用户对延迟的反馈再评估。
+  </div>
+
+  <h3>2.4 美颜方案</h3>
+  <table>
+    <tr><th>方案</th><th>说明</th><th>采用</th></tr>
+    <tr>
+      <td>原生相机美颜（屏幕共享方案）</td>
+      <td>用户在拍摄端原生相机中开启美颜，监看端镜像即可看到美颜效果，无需集成</td>
+      <td class="badge-yes">MVP 采用</td>
+    </tr>
+    <tr>
+      <td>GPUPixel（自研备选）</td>
+      <td>开源 C++/OpenGL 美颜库，支持磨皮、美白、瘦脸、大眼、腮红、口红，跨平台免费。若未来转为自研采集方案可集成</td>
+      <td class="badge-partial">备选</td>
+    </tr>
+    <tr>
+      <td>腾讯云 / 火山引擎特效 SDK</td>
+      <td>功能强大但需付费，且增加包体积</td>
+      <td class="badge-no">不采用</td>
+    </tr>
+  </table>
+</section>
+
+<!-- 3. 范围 -->
+<section>
+  <h2>3. 范围</h2>
+
+  <h3>3.1 P0（MVP 必须实现）</h3>
+  <table>
+    <tr><th>编号</th><th>能力</th><th>说明</th></tr>
+    <tr><td>P0-1</td><td>双机 WiFi Direct 直连</td><td>拍摄端开启无线调试，监看端通过配对码连接并建立屏幕镜像</td></tr>
+    <tr><td>P0-2</td><td>实时屏幕镜像</td><td>监看端实时显示拍摄端屏幕，延迟 ≤ 200ms</td></tr>
+    <tr><td>P0-3</td><td>触摸控制转发</td><td>监看端的触摸操作实时转发到拍摄端，可操作原生相机及任意 APP</td></tr>
+    <tr><td>P0-4</td><td>方向与旋转自适应</td><td>监看端画面随拍摄端屏幕方向自动旋转</td></tr>
+    <tr><td>P0-5</td><td>连接引导与异常提示</td><td>引导开启无线调试、断连重连、画面卡顿提示</td></tr>
+  </table>
+
+  <h3>3.2 P1（后续迭代）</h3>
+  <table>
+    <tr><th>编号</th><th>能力</th></tr>
+    <tr><td>P1-1</td><td>Type-C 有线连接（UVC + ADB，限兼容设备）</td></tr>
+    <tr><td>P1-2</td><td>监看端画质/码率调节</td></tr>
+    <tr><td>P1-3</td><td>拍摄端息屏继续镜像（降低功耗）</td></tr>
+    <tr><td>P1-4</td><td>连接后自动打开拍摄端相机 APP</td></tr>
+    <tr><td>P1-5</td><td>快捷键浮窗（一键拍照、切换摄像头）</td></tr>
+  </table>
+
+  <h3>3.3 明确不做（Excluded）</h3>
+  <ul>
+    <li>局域网模式（仅 WiFi Direct 直连）</li>
+    <li>音频传输</li>
+    <li>大文件/照片视频回传（拍摄结果仅存拍摄端本地）</li>
+    <li>跨互联网远程连接</li>
+    <li>iOS 支持</li>
+    <li>多监看端同时连接（仅 1 对 1）</li>
+    <li>自研美颜滤镜（复用原生相机）</li>
+  </ul>
+</section>
+
+<!-- 4. 角色与对象模型 -->
+<section>
+  <h2>4. 角色与对象模型</h2>
+
+  <h3>4.1 角色定义</h3>
+  <table>
+    <tr><th>角色</th><th>设备身份</th><th>核心能力</th><th>核心权限</th></tr>
+    <tr>
+      <td>拍摄端（Target）</td>
+      <td>被镜像与控制的设备，通常架在支架上</td>
+      <td>提供屏幕画面、执行触摸指令、运行原生相机</td>
+      <td>需开启「无线调试」；相机、存储权限由原生相机自行管理</td>
+    </tr>
+    <tr>
+      <td>监看端（Source）</td>
+      <td>观看与控制方，由拍摄者手持</td>
+      <td>接收屏幕画面、转发触摸操作</td>
+      <td>网络权限；通过 Wireless ADB 连接拍摄端</td>
+    </tr>
+  </table>
+
+  <div class="callout">
+    <strong>角色可切换：</strong>同一台手机可在不同会话中担任拍摄端或监看端，由用户在连接前选择。
+  </div>
+
+  <h3>4.2 核心对象：连接会话（Session）</h3>
+  <table>
+    <tr><th>字段</th><th>说明</th></tr>
+    <tr><td>role</td><td>本端角色：target / source</td></tr>
+    <tr><td>peerDeviceName</td><td>对端设备名称</td></tr>
+    <tr><td>state</td><td>会话状态（见 4.3）</td></tr>
+    <tr><td>fps / bitrate</td><td>当前镜像参数</td></tr>
+  </table>
+
+  <h3>4.3 会话状态机</h3>
+  <div class="state-machine">idle ──发起/配对──> connecting
+connecting ──ADB 连接成功──> connected
+connecting ──配对失败/超时──> disconnected
+connected ──任一端断开──> disconnecting
+connected ──网络异常──> reconnecting
+reconnecting ──重连成功──> connected
+reconnecting ──重连超时(15s)──> disconnected
+disconnecting ──完成──> idle
+disconnected ──用户重试──> connecting</div>
+</section>
+
+<!-- 5. 核心流程 -->
+<section>
+  <h2>5. 核心流程</h2>
+
+  <h3>5.1 首次配对连接流程</h3>
+  <div class="flow-diagram">[拍摄端]                              [监看端]
+  │ 选择「作为拍摄端」                  │
+  │ 引导开启「无线调试」                 │
+  │   - 跳转开发者选项                  │
+  │   - 开启无线调试并显示配对码         │
+  │                                    │ 选择「作为监看端」
+  │                                    │ 输入拍摄端配对码
+  │ <── Wireless ADB 配对请求 ──────── │
+  │ 确认配对                           │
+  │ ── 配对成功，建立 ADB 通道 ───────> │
+  │ 推送 scrcpy server 到拍摄端         │
+  │ 启动屏幕编码 + 触摸监听             │
+  │ ── 屏幕视频流 ───────────────────> │
+  │                                    │ 解码显示拍摄端屏幕
+  │ <── 触摸事件 ──────────────────── │
+  │ 注入触摸事件到系统                  │
+  │ （用户操作原生相机完成拍摄）         │</div>
+
+  <h3>5.2 配对方式</h3>
+  <table>
+    <tr><th>方式</th><th>操作</th><th>说明</th></tr>
+    <tr>
+      <td>无线调试配对码（MVP）</td>
+      <td>拍摄端在「开发者选项 → 无线调试」中查看 IP:端口 和配对码，监看端输入</td>
+      <td>Android 11+ 原生支持，无需 root</td>
+    </tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>用户体验约束：</strong>开启「无线调试」需要用户手动进入开发者选项，操作路径较深。产品需提供清晰的图文引导，并支持自动跳转至对应设置页。配对成功后，后续连接可自动复用，无需再次配对。
+  </div>
+
+  <h3>5.3 拍摄操作流程</h3>
+  <div class="flow-diagram">监看端显示拍摄端屏幕
+    → 用户在拍摄端手动打开原生相机 APP（或 P1 自动打开）
+    → 在监看端屏幕上直接操作：
+      · 点击对焦
+      · 双指缩放
+      · 切换前/后摄像头
+      · 调节美颜（原生相机功能）
+      · 点击快门拍照 / 录像
+    → 拍摄结果存储在拍摄端本地相册</div>
+</section>
+
+<!-- 6. 功能需求 -->
+<section>
+  <h2>6. 功能需求</h2>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-01</span> 角色选择与连接引导</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>用户打开 APP</td></tr>
+      <tr><td>布局</td><td>首页两个大按钮：「作为拍摄端」「作为监看端」</td></tr>
+      <tr><td>拍摄端引导</td><td>
+        1. 检测是否已开启无线调试<br>
+        2. 未开启：显示图文引导，提供「跳转开发者选项」按钮<br>
+        3. 已开启：显示设备的 IP:端口 与配对码，提示等待监看端连接
+      </td></tr>
+      <tr><td>监看端引导</td><td>
+        1. 提示确保两台手机在 WiFi Direct 直连范围内<br>
+        2. 输入拍摄端的 IP:端口 和配对码<br>
+        3. 发起连接
+      </td></tr>
+      <tr><td>结果</td><td>两端进入 connected 状态</td></tr>
+      <tr><td>异常</td><td>
+        ① 拍摄端系统版本 < Android 11：提示不支持无线调试<br>
+        ② 配对码错误：提示重新输入<br>
+        ③ 连接超时（10s）：提示检查距离与无线调试开关
+      </td></tr>
+    </table>
+  </div>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-02</span> WiFi Direct 直连建立</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>用户选择角色后自动发起</td></tr>
+      <tr><td>处理规则</td><td>
+        1. 拍摄端开启 WiFi Direct 监听<br>
+        2. 监看端扫描并连接拍摄端的 WiFi Direct 热点<br>
+        3. 连接成功后获取拍摄端 IP，再发起 Wireless ADB 配对
+      </td></tr>
+      <tr><td>结果</td><td>两台设备建立点对点网络连接</td></tr>
+      <tr><td>异常</td><td>
+        ① 监看端连接 WiFi Direct 时会断开原有 WiFi，需提前提示用户<br>
+        ② 扫描不到拍摄端：提示检查拍摄端 APP 是否在前台、距离是否过远
+      </td></tr>
+    </table>
+  </div>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-03</span> 实时屏幕镜像</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>Wireless ADB 连接成功后自动开始</td></tr>
+      <tr><td>布局</td><td>监看端全屏显示拍摄端屏幕，顶部显示连接状态、延迟、FPS</td></tr>
+      <tr><td>处理规则</td><td>
+        1. 拍摄端通过 MediaProjection 采集屏幕画面，编码（H.264/H.265）后推送<br>
+        2. 监看端解码并渲染，目标延迟 ≤ 200ms<br>
+        3. 画面方向随拍摄端屏幕旋转自适应<br>
+        4. 延迟 > 500ms 时，监看端顶部黄色提示「网络延迟较高」
+      </td></tr>
+      <tr><td>结果</td><td>监看端持续显示拍摄端屏幕</td></tr>
+      <tr><td>状态</td><td>streaming / buffering / frozen</td></tr>
+      <tr><td>异常</td><td>
+        ① 画面冻结超过 3s：显示「画面卡顿，正在恢复…」<br>
+        ② 拍摄端锁屏：画面暂停，显示「拍摄端已锁屏」
+      </td></tr>
+    </table>
+  </div>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-04</span> 触摸控制转发</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>用户在监看端屏幕上触摸、滑动、缩放</td></tr>
+      <tr><td>处理规则</td><td>
+        1. 监看端捕获触摸事件（坐标、手势类型）<br>
+        2. 通过 ADB 通道转发到拍摄端<br>
+        3. 拍摄端将触摸事件注入系统（等价于本机触摸）<br>
+        4. 坐标自动按屏幕分辨率比例映射
+      </td></tr>
+      <tr><td>结果</td><td>拍摄端响应触摸操作，如同用户直接操作拍摄端</td></tr>
+      <tr><td>说明</td><td>支持点击、滑动、双指缩放；用户可在监看端操作拍摄端的任意 APP，不限于相机</td></tr>
+      <tr><td>异常</td><td>触摸事件超时未响应（>500ms）：监看端轻微提示，不阻塞后续操作</td></tr>
+    </table>
+  </div>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-05</span> 连接管理与断线重连</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>连接成功后网络异常或任一端主动断开</td></tr>
+      <tr><td>处理规则</td><td>
+        1. 心跳检测：每 3s 互发心跳，连续 2 次未收到判定断连<br>
+        2. 自动重连：断连后自动重试，间隔 2s，最长 15s<br>
+        3. 重连期间监看端保持最后一帧画面并显示「重连中…」<br>
+        4. 已配对设备无需重新输入配对码
+      </td></tr>
+      <tr><td>结果</td><td>重连成功恢复镜像；超时进入 disconnected</td></tr>
+      <tr><td>异常</td><td>拍摄端主动断开时，监看端显示「拍摄端已结束连接」，不自动重连</td></tr>
+    </table>
+  </div>
+
+  <div class="fr-block">
+    <h3><span class="fr-id">FR-06</span> 设备状态监控</h3>
+    <table>
+      <tr><th>维度</th><th>说明</th></tr>
+      <tr><td>触发</td><td>连接成功后持续上报</td></tr>
+      <tr><td>处理规则</td><td>拍摄端每 10s 上报电量与屏幕状态；监看端顶栏显示对端电量</td></tr>
+      <tr><td>异常</td><td>拍摄端电量 ≤ 10% 时，监看端红色提示「拍摄端电量低，请及时充电」</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 7. 共享规则 -->
+<section>
+  <h2>7. 共享规则与异常</h2>
+
+  <h3>7.1 权限矩阵</h3>
+  <table>
+    <tr><th>权限</th><th>拍摄端</th><th>监看端</th><th>说明</th></tr>
+    <tr><td>无线调试</td><td class="badge-yes">必须开启</td><td class="badge-no">不需要</td><td>用于建立 ADB 通道</td></tr>
+    <tr><td>网络</td><td class="badge-yes">必须</td><td class="badge-yes">必须</td><td>WiFi Direct 点对点传输</td></tr>
+    <tr><td>前台服务</td><td class="badge-yes">必须</td><td class="badge-yes">必须</td><td>保持连接不被系统杀死</td></tr>
+    <tr><td>摄像头</td><td class="badge-partial">原生相机自管</td><td class="badge-no">不需要</td><td>本 APP 不直接调用摄像头</td></tr>
+    <tr><td>存储</td><td class="badge-no">不需要</td><td class="badge-no">不需要</td><td>拍摄结果由原生相机存入系统相册</td></tr>
+  </table>
+
+  <h3>7.2 数据边界</h3>
+  <ul>
+    <li>屏幕画面与触摸指令仅在两台设备间本地传输，<strong>不上传任何云端服务器</strong>。</li>
+    <li>不传音频，不传大文件。照片/视频仅存储在拍摄端本地相册。</li>
+    <li>连接断开后，监看端不保留任何拍摄端画面数据。</li>
+  </ul>
+
+  <h3>7.3 核心异常处理汇总</h3>
+  <table>
+    <tr><th>场景</th><th>拍摄端表现</th><th>监看端表现</th><th>恢复方式</th></tr>
+    <tr><td>网络断连</td><td>显示「连接断开」</td><td>重连遮罩，自动重连 15s</td><td>自动重连或手动重连</td></tr>
+    <tr><td>拍摄端被来电打断</td><td>屏幕显示来电界面</td><td>镜像来电界面，操作暂停</td><td>通话结束自动恢复</td></tr>
+    <tr><td>拍摄端锁屏</td><td>屏幕熄灭</td><td>显示「拍摄端已锁屏」</td><td>用户点亮拍摄端屏幕</td></tr>
+    <tr><td>监看端切后台</td><td>继续推流</td><td>停止接收</td><td>回前台自动恢复</td></tr>
+    <tr><td>无线调试被关闭</td><td>提示重新开启</td><td>连接断开</td><td>重新开启并配对</td></tr>
+  </table>
+</section>
+
+<!-- 8. 开放问题 -->
+<section>
+  <h2>8. 开放问题</h2>
+  <table>
+    <tr><th>编号</th><th>问题</th><th>影响</th><th>建议</th></tr>
+    <tr>
+      <td>Q1</td>
+      <td>用户开启「无线调试」的门槛较高，是否接受？</td>
+      <td>影响首次配对成功率</td>
+      <td>提供详细图文引导 + 自动跳转设置页；评估是否可通过 Shizuku 等方案降低门槛</td>
+    </tr>
+    <tr>
+      <td>Q2</td>
+      <td>屏幕镜像延迟是否满足自拍实时取景需求？</td>
+      <td>影响核心体验</td>
+      <td>WiFi Direct 下目标 ≤ 200ms，需实测验证；不满足则考虑降分辨率/码率</td>
+    </tr>
+    <tr>
+      <td>Q3</td>
+      <td>是否需要连接后自动打开拍摄端原生相机？</td>
+      <td>影响操作便捷性</td>
+      <td>列入 P1，通过 ADB 命令 <code>am start</code> 拉起相机</td>
+    </tr>
+    <tr>
+      <td>Q4</td>
+      <td>Type-C 有线方案是否值得投入？</td>
+      <td>需额外开发且设备兼容差</td>
+      <td>视 WiFi 方案延迟满意度决定；若用户对延迟敏感且持有 Pixel 等兼容设备，可考虑 P1</td>
+    </tr>
+  </table>
+</section>
+
+<footer>
+  双机监看自拍 APP PRD · v1.1 · 2026-10-26
+</footer>
+
+</div>
+</body>
+</html>
